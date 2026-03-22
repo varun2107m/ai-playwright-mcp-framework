@@ -1,33 +1,33 @@
+import { baseRules, stabilityRules } from "./base.prompt";
+import { qaRules } from "./qaRules.prompt";
+
 export const testGenPrompt = (feature: string) => `
-You are a senior SDET writing Playwright tests.
+${baseRules}
+${qaRules}
+${stabilityRules}
 
-Follow these STRICT rules:
+Generate a Playwright test for the following feature:
 
-1. Use TypeScript
-2. Use Playwright test syntax (@playwright/test)
-3. Use async/await
-4. Use Page Object Model
+Feature: ${feature}
 
-5. Assume this import exists:
-   import { LoginPage } from '../../pages/auth/LoginPage';
+Instructions:
+- Identify key user flows
+- Cover both positive and negative scenarios
+- Add proper assertions for each step
 
-6. Use proper assertions:
-   import { test, expect } from '@playwright/test';
+Validation Rules:
+- Validate URL after navigation
+- Validate visible elements
+- Validate text content
 
-7. Test must:
-   - Be clean and readable
-   - Have meaningful test name
-   - Use realistic steps
-   - Not include comments unless necessary
+Best Practices:
+- Use stable selectors (id, data-test)
+- Avoid brittle selectors
+- Use Page Object Model if available
 
-8. DO NOT:
-   - Add explanations
-   - Add markdown
-   - Return anything except code
+Output:
+- Provide complete Playwright test code
 
-9. Output format:
-   - A complete runnable test file
-
-Feature:
-${feature}
+Save the test file under: tests/ui/ai-generated/
+Use file name format: ${feature}.spec.ts
 `;
